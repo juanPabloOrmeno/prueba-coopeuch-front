@@ -40,7 +40,17 @@ export class TareaService {
 
   async eliminarTarea(tarea: any) {
     try {
-      return await this.tareasService.deletePost(tarea).toPromise()
+
+
+      let borrar = {
+        id: tarea._id
+      }
+
+
+      console.log(borrar)
+
+
+      return await this.tareasService.deletePost(borrar).toPromise()
     } catch (err) {
       console.log(err)
     }

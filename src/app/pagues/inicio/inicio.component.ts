@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { fromEvent } from 'rxjs';
 import { TareaService } from 'src/app/services/tarea.service';
 
 @Component({
@@ -24,6 +25,9 @@ export class InicioComponent implements OnInit {
 
   async guardar(forma: NgForm) {
 
+
+    console.log('guarda')
+
     if (forma.valid) {
       let guardar = await this.tareaService.nuevaTarea(forma.value)
       this.resp = await this.tareaService.obtenerProductos();
@@ -34,29 +38,34 @@ export class InicioComponent implements OnInit {
   }
 
 
-  async actualizar(forma: NgForm) {
-    if (forma.valid) {
-      this.tareaSelect.descripcion = forma.value.descripcion
-      let actualizar = await this.tareaService.actualizarTarea(this.tareaSelect)
+  async actualizar(tarea) {
+
+      let datos = {
+        id: this.tarea.id,
+        descripcion: tarea.value.descripcion,
+        vigente: tarea.value.vigente,
+      }
+
+      let actualizar = await this.tareaService.actualizarTarea(datos)
       this.resp = await this.tareaService.obtenerProductos();
       console.log(actualizar)
       this.crear = true
-    } else {
-      console.log("formulario invalido")
-    }
+    
   }
 
 
   seleccionarTarea(tarea){
     this.crear = false
-    this.tareaSelect.id = tarea._id
-    this.tareaSelect.descripcion = tarea.descripcion
-    this.tareaSelect.vigente = tarea.vigente
-    console.log(this.tareaSelect)
+    this.tarea.id = tarea._id
+    this.tarea.descripcion = tarea.descripcion
+    this.tarea.vigente = tarea.vigente
+    console.log(this.tarea)
   }
 
-  borrarTarea(id){
-    console.log(id)
+  async borrarTarea(tarea){
+    
+    await this.tareaService.eliminarTarea(tarea)
+    this.resp = await this.tareaService.obtenerProductos();
   }
 
 }
