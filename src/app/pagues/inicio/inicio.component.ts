@@ -10,6 +10,8 @@ import { TareaService } from 'src/app/services/tarea.service';
 export class InicioComponent implements OnInit {
   resp = {}
   tarea: any = {}
+  tareaSelect: any = {}
+  crear = true;
 
   constructor(private tareaService: TareaService) { }
 
@@ -21,16 +23,40 @@ export class InicioComponent implements OnInit {
 
 
   async guardar(forma: NgForm) {
-    let guardar = await this.tareaService.nuevaTarea(forma.value)
-    this.resp = await this.tareaService.obtenerProductos();
-    console.log(guardar) 
+
+    if (forma.valid) {
+      let guardar = await this.tareaService.nuevaTarea(forma.value)
+      this.resp = await this.tareaService.obtenerProductos();
+      console.log(guardar)
+    } else {
+      console.log("formulario invalido")
+    }
   }
 
 
   async actualizar(forma: NgForm) {
-    let actualizar = await this.tareaService.actualizarTarea(forma.value)
-    this.resp = await this.tareaService.obtenerProductos();
-    console.log(actualizar) 
+    if (forma.valid) {
+      this.tareaSelect.descripcion = forma.value.descripcion
+      let actualizar = await this.tareaService.actualizarTarea(this.tareaSelect)
+      this.resp = await this.tareaService.obtenerProductos();
+      console.log(actualizar)
+      this.crear = true
+    } else {
+      console.log("formulario invalido")
+    }
+  }
+
+
+  seleccionarTarea(tarea){
+    this.crear = false
+    this.tareaSelect.id = tarea._id
+    this.tareaSelect.descripcion = tarea.descripcion
+    this.tareaSelect.vigente = tarea.vigente
+    console.log(this.tareaSelect)
+  }
+
+  borrarTarea(id){
+    console.log(id)
   }
 
 }

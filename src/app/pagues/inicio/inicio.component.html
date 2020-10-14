@@ -3,7 +3,7 @@
     <h4>Nueva Tarea</h4>
     <hr>
 
-    <form autocomplete="off" (ngSubmit)="guardar( forma )" #forma="ngForm">
+    <form [hidden]="!crear" autocomplete="off" (ngSubmit)="guardar( forma )" #forma="ngForm">
 
         <div class="form-group row">
             <label class="col-2 col-form-label">Descripcion</label>
@@ -47,19 +47,71 @@
       </form>
 
 
-    <div class="row listaProductos">
-        <div class="col-12 " *ngFor="let tarea of resp.response">
-            <div class="tarea">
 
-                <div class="detalleProducto">
 
-                    Descripcion: {{tarea.descripcion}}
+      <form [hidden]="crear" autocomplete="off" (ngSubmit)="actualizar( forma )" #forma="ngForm">
 
-                </div>
 
+       
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Descripcion</label>
+            <div class="col-8">
+              <input class="form-control" 
+                     type="text" 
+                     placeholder="descripcion" 
+                     name="descripcion" 
+                     [ngModel]="tareaSelect.descripcion" 
+                     required minlenhth="5" 
+                     [class.is-invalid]= "descripcion.invalid && descripcion.touched" 
+                     required
+                     #descripcion="ngModel">
             </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-2 col-form-label">Vigente</label>
+            <div class="col-8">
+              <input class="form-control" 
+                     type="text" 
+                     placeholder="Vigente" 
+                     name="vigente" 
+                     [ngModel]="tareaSelect.vigente" 
+                     required minlenhth="5" 
+                     [class.is-invalid]= "vigente.invalid && vigente.touched" 
+                     required
+                     #vigente="ngModel">
+            </div>
+          </div>
+    
+        <div class="form-group row">
+          <label class="col-2 col-form-label">&nbsp;</label>
+          <div class="input-group col-md-8">
+            <button type="submit" class="btn btn-outline-primary btn-block">
+              Actualizar
+            </button>
+          </div>
         </div>
-    </div>
+    
+      </form>
+
+
+      <h4>Lista de Tareas</h4>
+      <hr>
+  
+
+      <ul class="list-group" *ngFor="let tarea of resp.response">
+        <button (click)="seleccionarTarea(tarea)" type="button" class="list-group-item list-group-item-action ">
+          Descripcion: {{tarea.descripcion}}
+
+          <button  class="btn btn-outline-primary ">
+            Borrar
+          </button>
+        </button>
+       
+      </ul>
+
+    
 
 
 
