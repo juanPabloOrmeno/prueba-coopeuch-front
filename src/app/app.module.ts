@@ -14,10 +14,6 @@ import { InicioComponent } from './pagues/inicio/inicio.component';
 
 
 
-
-
-
-
 export function apiConfigSwagger(): Configuration{
   const params:ConfigurationParameters = {
     basePath: environment.basePath,
