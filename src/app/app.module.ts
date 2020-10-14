@@ -7,9 +7,13 @@ import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 
 
+import { FormsModule} from '@angular/forms'
+
+
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiModule, Configuration, ConfigurationParameters} from '../api';
 import { InicioComponent } from './pagues/inicio/inicio.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -30,8 +34,10 @@ export function apiConfigSwagger(): Configuration{
   imports: [
     BrowserModule,
     AppRoutingModule,
-     HttpClientModule,
+    HttpClientModule,
+    FormsModule,
     ApiModule.forRoot(apiConfigSwagger),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

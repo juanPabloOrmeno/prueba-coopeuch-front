@@ -11,12 +11,38 @@ export class TareaService {
 
   async obtenerProductos() {
     try {
-      
-
-        return await this.tareasService.rootGet().toPromise();
-
+      return await this.tareasService.rootGet().toPromise();
     } catch (err) {
-        console.log(err)
+      console.log(err)
     }
-}
+  }
+
+
+  async nuevaTarea(tarea: any) {
+    try {
+      return await this.tareasService.createPost(tarea).toPromise()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+
+  async actualizarTarea(tarea: any) {
+    try {
+      return await this.tareasService.updatePut(tarea).toPromise()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+
+  async eliminarTarea(tarea: any) {
+    try {
+      return await this.tareasService.deletePost(tarea).toPromise()
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }
